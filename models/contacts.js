@@ -1,19 +1,38 @@
 // const fs = require('fs/promises')
 
-const listContacts = async () => {}
+const listRecipe = async () => {};
 
-const getContactById = async (contactId) => {}
+const getRecipeById = async (recipeId) => {};
 
-const removeContact = async (contactId) => {}
+const removeRecipe = async (recipeId) => {};
 
-const addContact = async (body) => {}
+const addRecipe = async (data) => {
+  // const recipe = await getAllRecipe();
+  // const newRecipe = {
+  //   id: nanoid(),
+  //   ...data,
+  // };
+  // recipe.push(newRecipe);
+  // return console.log(newRecipe);;
+};
 
-const updateContact = async (contactId, body) => {}
+const updateRecipe = async (recipeId, body) => {};
+const getByIdRecipe = async (id) => {
+  const recipe = await getAllRecipe();
+  const result = recipe.find((item) => item.id === id);
+  return result || null;
+};
+
+const editRecipe = async (id, data) => {
+  const allRecipe = await getAllRecipe();
+  const recipe = allRecipe.findIndex((item) => item.id === id);
+  if (recipe === -1) null;
+};
 
 module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-}
+  listRecipe,
+  getRecipeById,
+  removeRecipe,
+  addRecipe,
+  updateRecipe,
+};
