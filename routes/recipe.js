@@ -1,4 +1,4 @@
-const { getAll, getById, newRecipe, remove, update } = require("../controllers/recipe-controllers.js");
+const { x, getById, newRecipe, remove, update } = require("../controllers/recipe-controllers.js");
 const { validateBody } = require("../decorators/validateBody.js");
 const express = require("express");
 

@@ -1,4 +1,5 @@
 // const fs = require('fs/promises')
+const getAllRecipe = async () => {};
 
 const removeRecipe = async (id) => {
   try {
@@ -31,6 +32,7 @@ const updateRecipeById = async (id, data) => {
 };
 
 module.exports = {
+  getAllRecipe,
   getRecipeById,
   removeRecipe,
   addRecipe,

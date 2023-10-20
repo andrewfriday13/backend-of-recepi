@@ -1,10 +1,11 @@
-const { listRecipe, getRecipeById, addRecipe, removeRecipe, updateRecipeById } = require("../models/contacts.js");
+const { getAllRecipe, getRecipeById, addRecipe, removeRecipe, updateRecipeById } = require("../models/recipe.js");
 
 const HttpError = require("../helpers/HttpError.js");
 const { ctrlWrapper } = require("../decorators/ctrlWrapper.js");
 
 const getAll = async (req, res) => {
-  const result = await listRecipe();
+  const result = await getAllRecipe();
+  console.log(result);
   res.json({ message: "template message" });
 };
 
