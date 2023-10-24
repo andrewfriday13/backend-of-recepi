@@ -1,7 +1,5 @@
 // const fs = require('fs/promises')
-const getAllRecipe = async (res, req) => {
-  res.json({ message: "всі" });
-};
+const getAllRecipe = async () => {};
 
 const removeRecipe = async (id) => {
   try {
@@ -24,7 +22,7 @@ const addRecipe = async (data) => {
 const getRecipeById = async (id) => {
   const recipe = await getAllRecipe();
   const result = recipe.find((item) => item.id === id);
-  return result.json(result) || null;
+  return result || null;
 };
 
 const updateRecipeById = async (id, data) => {
