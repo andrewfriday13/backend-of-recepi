@@ -2,7 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-const recipeRouter = require("./routes/api/recipe");
+const recipeRouter = require("./routes/recipe");
 
 const app = express();
 

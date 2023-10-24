@@ -1,18 +1,19 @@
-const { x, getById, newRecipe, remove, update } = require("../controllers/recipe-controllers.js");
+const { getAll, getById, newRecipe, deleteRecipe, changeRecipe } = require("../controllers/recipe-controllers");
 const { validateBody } = require("../decorators/validateBody.js");
 const express = require("express");
 
 const router = express.Router();
 const { recipeSchema } = require("../schemas/recipeSchemas.js");
+
 router.get("/", getAll);
 
 router.get("/:id", getById);
 
 router.post("/", validateBody(recipeSchema), newRecipe);
 
-router.delete("/:id", remove);
+router.delete("/:id", deleteRecipe);
 
-router.put("/:id", validateBody(recipeSchema), update);
+router.put("/:id", validateBody(recipeSchema), changeRecipe);
 
 module.exports = router;
-//логін andrew пароль On8nlwRFeL6HcOsN якийсь там пароль від бд
+//логін andrew парольб On8nlwRFeL6HcOsN якийсь там пароль від бд
