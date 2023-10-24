@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 const { recipeSchema } = require("../schemas/recipeSchemas.js");
 
-router.get("/", getAll);
+router.get("/recipe", getAll);
 
 router.get("/:id", getById);
 

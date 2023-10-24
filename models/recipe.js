@@ -1,5 +1,14 @@
 // const fs = require('fs/promises')
-const getAllRecipe = async () => {};
+const getAllRecipe = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const result = await Contact.find({ owner }, "-createdAt -updatedAt", { skip, limit }).populate(
+    "owner",
+    "name email"
+  );
+  res.json(result);
+};
 
 const removeRecipe = async (id) => {
   try {
@@ -22,7 +31,7 @@ const addRecipe = async (data) => {
 const getRecipeById = async (id) => {
   const recipe = await getAllRecipe();
   const result = recipe.find((item) => item.id === id);
-  return result || null;
+  return result.json(result) || null;
 };
 
 const updateRecipeById = async (id, data) => {
