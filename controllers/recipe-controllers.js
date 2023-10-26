@@ -9,12 +9,19 @@ const getAll = async (req, res) => {
   res.json(result);
 };
 
-// const getById = async (req, res) => {
-//   const { id } = req.params;
-//   const result = await getRecipeById(id);
-//   if (!result) throw HttpError(404, `Id ${id} invalid`);
-//   res.json(result);
-// };
+const getById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await Recipe.findOne({ _id: id });
+  // const result = await Recipe.findById(id);
+  console.log(id);
+
+  if (result) {
+    throw HttpError(404, `Id ${id} invalid`);
+  }
+
+  res.json(result);
+};
 
 // const newRecipe = async (req, res) => {
 //   const result = await addRecipe(req.body);
@@ -37,7 +44,7 @@ const getAll = async (req, res) => {
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  // getById: ctrlWrapper(getById),
+  getById: ctrlWrapper(getById),
   // newRecipe: ctrlWrapper(newRecipe),
   // deleteRecipe: ctrlWrapper(deleteRecipe),
   // changeRecipe: ctrlWrapper(changeRecipe),

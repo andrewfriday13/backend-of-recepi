@@ -7,7 +7,7 @@ const { recipeSchema } = require("../schemas/recipeSchemas.js");
 
 router.get("/recipe", getAll);
 
-// router.get("/:id", getById);
+router.get("/:id", getById);
 
 // router.post("/", validateBody(recipeSchema), newRecipe);
 
