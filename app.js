@@ -1,7 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-
+require("dotenv").config();
 const recipeRouter = require("./routes/recipe");
 
 const app = express();

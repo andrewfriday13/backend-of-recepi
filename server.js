@@ -1,8 +1,6 @@
 const moongose = require("mongoose");
 const app = require("./app");
-
-const CONNECT_DB =
-  "mongodb+srv://andrew:On8nlwRFeL6HcOsN@cluster0.dy8pfpy.mongodb.net/recipe?retryWrites=true&w=majority";
+const { CONNECT_DB } = process.env;
 moongose.set("strictQuery", true);
 
 moongose

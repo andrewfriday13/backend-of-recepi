@@ -7,13 +7,12 @@ const { recipeSchema } = require("../schemas/recipeSchemas.js");
 
 router.get("/recipe", getAll);
 
-router.get("/:id", getById);
+// router.get("/:id", getById);
 
-router.post("/", validateBody(recipeSchema), newRecipe);
+// router.post("/", validateBody(recipeSchema), newRecipe);
 
-router.delete("/:id", deleteRecipe);
+// router.delete("/:id", deleteRecipe);
 
-router.put("/:id", validateBody(recipeSchema), changeRecipe);
+// router.put("/:id", validateBody(recipeSchema), changeRecipe);
 
 module.exports = router;
-//логін andrew парольб On8nlwRFeL6HcOsN якийсь там пароль від бд
