@@ -1,4 +1,4 @@
-const { getAll, getById, newRecipe, deleteRecipe, changeRecipe } = require("../controllers/recipe-controllers");
+const { getAll, getById, newRecipe, deleteRecipe, updateById } = require("../controllers/recipe-controllers");
 const { validateBody } = require("../decorators/validateBody.js");
 const express = require("express");
 
@@ -9,10 +9,10 @@ router.get("/recipe", getAll);
 
 router.get("/:id", getById);
 
-// router.post("/", validateBody(recipeSchema), newRecipe);
+router.post("/", validateBody(recipeSchema), newRecipe);
 
-// router.delete("/:id", deleteRecipe);
+router.delete("/:id", deleteRecipe);
 
-// router.put("/:id", validateBody(recipeSchema), changeRecipe);
+router.put("/:id", validateBody(recipeSchema), updateById);
 
 module.exports = router;
