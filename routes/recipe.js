@@ -17,7 +17,7 @@ router.get("/recipe", getAll);
 
 router.get("/:id", isValid, getById);
 
-router.post("/", validateBody(schemas.addSchema), newRecipe);
+router.post("/", validateBody(schemas.addSchema));
 
 router.delete("/:id", isValid, deleteRecipe);
 
