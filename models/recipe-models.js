@@ -1,12 +1,17 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const { handleMongooseError } = require("../helpers/handleMongooseError");
+const { handleMongooseError } = require("../middleware/handleMongooseError");
 
 const recipeSchema = new Schema(
   {
     name: {
       type: String,
+      required: true,
+    },
+    favorite: {
+      type: Boolean,
+      default: false,
       required: true,
     },
   },
@@ -25,7 +30,7 @@ const updateFavoriteSchema = Joi.object({
 
 const schemas = {
   addSchema,
-  // updateFavoriteSchema,
+  updateFavoriteSchema,
 };
 
 const Recipe = model("recipe", recipeSchema);

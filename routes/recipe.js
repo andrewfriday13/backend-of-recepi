@@ -1,18 +1,28 @@
-const { getAll, getById, newRecipe, deleteRecipe, updateById } = require("../controllers/recipe-controllers");
-const { validateBody } = require("../decorators/validateBody.js");
+const {
+  getAll,
+  getById,
+  newRecipe,
+  deleteRecipe,
+  updateById,
+  updateFaivorite,
+} = require("../controllers/recipe-controllers");
+const { validateBody } = require("../middleware/validateBody.js");
+const { schemas } = require("../models/recipe-models.js");
+const isValid = require("../middleware/isValid.js");
 const express = require("express");
 
 const router = express.Router();
-const { recipeSchema } = require("../schemas/recipeSchemas.js");
 
 router.get("/recipe", getAll);
 
-router.get("/:id", getById);
+router.get("/:id", isValid, getById);
 
-router.post("/", validateBody(recipeSchema), newRecipe);
+router.post("/", validateBody(schemas.addSchema), newRecipe);
 
-router.delete("/:id", deleteRecipe);
+router.delete("/:id", isValid, deleteRecipe);
 
-router.put("/:id", validateBody(recipeSchema), updateById);
+router.put("/:id", isValid, validateBody(schemas.addSchema), updateById);
+
+router.patch("/:id/faivorite", isValid, validateBody(schemas.updateFavoriteSchema), updateFaivorite);
 
 module.exports = router;
