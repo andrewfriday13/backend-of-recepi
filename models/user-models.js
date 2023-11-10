@@ -14,12 +14,13 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
       match: emailExp,
     },
     password: {
       type: String,
       required: true,
-      match: passwordExp,
+      minlength: 6,
     },
   },
   { versionKey: false, timestamps: true }
