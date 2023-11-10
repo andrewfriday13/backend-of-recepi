@@ -6,7 +6,6 @@ const { User } = require("../models/user-models");
 
 const { HttpError } = require("../helpers/HttpError.js");
 const ctrlWrapper = require("../helpers/ctrlWrapper.js");
-const { use } = require("../app");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -27,14 +26,18 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (!user) throw HttpError(401, "User not found");
+  if (!user) throw HttpError(401, "Email or password invalid");
 
+  const passwordCompare = await bcrypt.compare(password, user.password);
+  if (!passwordCompare) {
+    throw HttpError(401, "Email or password invalid");
+  }
   const payload = {
     id: user._id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
 
-  const passwordCompare = await bcrypt.compare(password, user.password);
+  res.json({ token });
 };
 
 module.exports = {
