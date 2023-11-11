@@ -11,7 +11,9 @@ const register = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (user) throw HttpError(409, "Email already in use");
+  if (user) {
+    throw HttpError(409, "Email already in use");
+  }
 
   const hashPassword = await bcrypt.hash(password, 11);
 
@@ -22,25 +24,46 @@ const register = async (req, res) => {
   });
 };
 
-const login = async (req, res, next) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (!user) throw HttpError(401, "Email or password invalid");
+  const { _id } = user;
+
+  if (!user) {
+    throw HttpError(401, "Email or password invalid");
+  }
 
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password invalid");
   }
   const payload = {
-    id: user._id,
+    id: _id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
 
+  await User.findByIdAndUpdate(_id, { token });
   res.json({ token });
 };
+const getCurrent = async (req, res, next) => {
+  const { email, name } = req.user;
+  res.json({
+    email,
+    name,
+  });
+};
 
+const logOut = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
+  res.json({
+    message: "Log out success",
+  });
+};
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  getCurrent: ctrlWrapper(getCurrent),
+  logOut: ctrlWrapper(logOut),
 };

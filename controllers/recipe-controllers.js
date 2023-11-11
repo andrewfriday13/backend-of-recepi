@@ -4,7 +4,10 @@ const { HttpError } = require("../helpers/HttpError.js");
 const ctrlWrapper = require("../helpers/ctrlWrapper.js");
 
 const getAll = async (req, res) => {
-  const result = await Recipe.find({}, "-createdAt -updatedAt");
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const result = await Recipe.find({ owner }, "-createdAt -updatedAt", { skip, limit }).populate("owner", "name email");
   res.json(result);
 };
 
@@ -18,7 +21,8 @@ const getById = async (req, res) => {
 };
 
 const newRecipe = async (req, res) => {
-  const result = await Recipe.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Recipe.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
