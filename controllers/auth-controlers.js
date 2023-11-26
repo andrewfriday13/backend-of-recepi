@@ -1,4 +1,8 @@
 const bcrypt = require("bcrypt");
+const gravatar = require("gravatar");
+const path = require("path");
+const fs = require("fs");
+
 const { SECRET_KEY } = process.env;
 
 const jwt = require("jsonwebtoken");
@@ -7,6 +11,7 @@ const { User } = require("../models/user-models");
 const { HttpError } = require("../helpers/HttpError.js");
 const ctrlWrapper = require("../helpers/ctrlWrapper.js");
 
+const avatarDir = path.join();
 const register = async (req, res) => {
   const { email, password } = req.body;
 
@@ -14,10 +19,10 @@ const register = async (req, res) => {
   if (user) {
     throw HttpError(409, "Email already in use");
   }
-
+  const avatar = gravatar.url(email);
   const hashPassword = await bcrypt.hash(password, 11);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const newUser = await User.create({ ...req.body, password: hashPassword, avatar });
 
   res.status(201).json({
     message: " register success",
@@ -61,9 +66,25 @@ const logOut = async (req, res) => {
     message: "Log out success",
   });
 };
+
+const updateAvatar = async (req, res) => {
+  const { _id } = req.user;
+  console.log(req.file);
+  const { path: tempUpload, originalname } = req.file;
+  const resultUpload = path.join(avatarDir, originalname);
+  await fs.rename(tempUpload, resultUpload);
+  const avatar = path.join("picture", originalname);
+  await User.findByIdAndUpdate(_id, avatar);
+  res.json({
+    message: "update success",
+  });
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logOut: ctrlWrapper(logOut),
+  updateAvatar: ctrlWrapper(updateAvatar),
+  // updateAvatar,
 };
